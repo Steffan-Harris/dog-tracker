@@ -1,73 +1,67 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
-const formatTime = (totalSeconds) => {
-  const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
-  const seconds = String(totalSeconds % 60).padStart(2, "0");
-  return `${minutes}:${seconds}`;
-};
+const newId = (() => {
+  let id = 0;
+  return () => {
+    id++;
+    return id;
+  };
+})();
+
+const INITIAL_WALKS = [
+  { id: newId(), name: "Morning Walk", time: 0 },
+  { id: newId(), name: "Afternoon Walk", time: 0 },
+];
 
 function App() {
-  const [isWalking, setIsWalking] = useState(false);
-  const [elapsedSeconds, setElapsedSeconds] = useState(0);
-  const [walks, setWalks] = useState([]);
-  const timerId = useRef(null);
-
-  const startWalkTimer = () => {
-    if (timerId.current) return; // Prevent multiple timers
-    setElapsedSeconds(0);
-    timerId.current = setInterval(() => {
-      setElapsedSeconds((prev) => prev + 1);
-    }, 1000);
-  };
-
-  const resetWalkTimer = () => {
-    if (timerId.current) {
-      clearInterval(timerId.current);
-      timerId.current = null;
-    }
-    setWalks((prevWalks) => [...prevWalks, elapsedSeconds]);
-    setElapsedSeconds(0);
-  };
-
-  useEffect(() => {
-    return () => {
-      if (timerId.current) clearInterval(timerId.current);
-    };
-  }, []);
-
-  const onWalk = () => {
-    setIsWalking(true);
-    startWalkTimer();
-  };
-
-  const onEndWalk = () => {
-    setIsWalking(false);
-    resetWalkTimer();
-  };
+  const [walks, setWalks] = useState(INITIAL_WALKS);
+  const [newWalk, setNewWalk] = useState("");
 
   return (
     <>
-      <h1>Dog Tracker</h1>
-      <h2>Dog name: Jesse</h2>
-      <h2>Dog breed: Golden Retriever</h2>
-      <h2>Dog age: 2</h2>
+      <h1>Dog Walk Tracker: Jesse</h1>
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          setWalks([...walks, { id: newId(), name: newWalk, time: 0 }]);
+          setNewWalk("");
+        }}
+      >
+        <input
+          type="text"
+          placeholder="Add New Walk"
+          value={newWalk}
+          onChange={(event) => {
+            setNewWalk(event.target.value);
+          }}
+          aria-label="Add New Walk"
+        />
+        <button>Submit</button>
+      </form>
       <section>
-        <h3>Walks:</h3>
-        {walks.map((walk, index) => (
-          <p key={index}>
-            Walk {index + 1}: {formatTime(walk)}
-          </p>
-        ))}
-
-        <p>Stopwatch: {formatTime(elapsedSeconds)}</p>
-
-        {isWalking ? (
-          <>
-            <p>Currently walking...</p>
-            <button onClick={onEndWalk}>End walk</button>
-          </>
+        {walks.length === 0 ? (
+          <p>No walks recorded yet.</p>
         ) : (
-          <button onClick={onWalk}>Start walk</button>
+          <ul>
+            {walks.map((walk, index) => (
+              <li key={index}>
+                {walk.name}: {walk.time} minutes
+                <button
+                  onClick={() => {
+                    if (
+                      window.confirm(
+                        `Are you sure you want to delete "${walk.name}"?`,
+                      )
+                    ) {
+                      setWalks(walks.filter((w) => w.id !== walk.id));
+                    }
+                  }}
+                >
+                  Delete
+                </button>
+              </li>
+            ))}
+          </ul>
         )}
       </section>
     </>
