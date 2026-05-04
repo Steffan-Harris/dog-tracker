@@ -73,7 +73,7 @@ h2 {
   color: var(--text-h);
 }
 
-h1 {
+.dog-tracker__title {
   font-size: 56px;
   letter-spacing: -1.68px;
   margin: 32px 0;
@@ -112,7 +112,11 @@ code {
 
 /* Walk tracker */
 
-form {
+.dog-tracker {
+  padding: 0 16px 24px;
+}
+
+.dog-tracker__form {
   display: flex;
   gap: 8px;
   justify-content: center;
@@ -120,8 +124,7 @@ form {
   margin-bottom: 24px;
 }
 
-input[type="text"],
-input[type="number"] {
+.dog-tracker__input {
   padding: 8px 12px;
   border: 1px solid var(--border);
   border-radius: 6px;
@@ -133,17 +136,16 @@ input[type="number"] {
   transition: border-color 0.15s;
 }
 
-input[type="text"]:focus,
-input[type="number"]:focus {
+.dog-tracker__input:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-bg);
 }
 
-input.duration-input {
+.dog-tracker__input--duration {
   width: 140px;
 }
 
-button {
+.dog-tracker__button {
   padding: 8px 16px;
   border: 1px solid var(--accent-border);
   border-radius: 6px;
@@ -157,17 +159,17 @@ button {
     opacity 0.15s;
 }
 
-button:hover:not(:disabled) {
+.dog-tracker__button:hover:not(:disabled) {
   background: var(--accent);
   color: #fff;
 }
 
-button:disabled {
+.dog-tracker__button:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
 
-ul {
+.dog-tracker__list {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -179,7 +181,7 @@ ul {
   margin-inline: auto;
 }
 
-li {
+.dog-tracker__item {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -189,34 +191,34 @@ li {
   gap: 12px;
 }
 
-.walk-info {
+.dog-tracker__item-info {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.walk-name {
+.dog-tracker__item-name {
   font-weight: 500;
   color: var(--text-h);
 }
 
-.walk-meta {
+.dog-tracker__item-meta {
   font-size: 13px;
   color: var(--text);
 }
 
-.walk-date {
+.dog-tracker__item-date {
   color: var(--text);
 }
 
-button.delete-btn {
+.dog-tracker__button--delete {
   border-color: rgba(239, 68, 68, 0.4);
   background: rgba(239, 68, 68, 0.08);
   color: #ef4444;
   flex-shrink: 0;
 }
 
-button.delete-btn:hover {
+.dog-tracker__button--delete:hover {
   background: #ef4444;
   color: #fff;
 }

@@ -44,9 +44,10 @@ function App() {
   const canSubmit = newWalk.trim().length > 0;
 
   return (
-    <>
-      <h1>Dog Walk Tracker: Jesse</h1>
+    <main className="dog-tracker">
+      <h1 className="dog-tracker__title">Dog Walk Tracker: Jesse</h1>
       <form
+        className="dog-tracker__form"
         onSubmit={(event) => {
           event.preventDefault();
           if (!canSubmit) return;
@@ -64,6 +65,7 @@ function App() {
         }}
       >
         <input
+          className="dog-tracker__input dog-tracker__input--name"
           type="text"
           placeholder="Walk name"
           value={newWalk}
@@ -71,31 +73,35 @@ function App() {
           aria-label="Walk name"
         />
         <input
+          className="dog-tracker__input dog-tracker__input--duration"
           type="number"
           placeholder="Duration (mins)"
           value={newDuration}
           min="0"
           onChange={(event) => setNewDuration(event.target.value)}
           aria-label="Duration in minutes"
-          className="duration-input"
         />
-        <button type="submit" disabled={!canSubmit}>
+        <button
+          className="dog-tracker__button dog-tracker__button--submit"
+          type="submit"
+          disabled={!canSubmit}
+        >
           Add Walk
         </button>
       </form>
-      <section>
+      <section className="dog-tracker__content">
         {walks.length === 0 ? (
-          <p>No walks recorded yet.</p>
+          <p className="dog-tracker__empty">No walks recorded yet.</p>
         ) : (
-          <ul>
+          <ul className="dog-tracker__list">
             {walks.map((walk) => (
-              <li key={walk.id}>
-                <div className="walk-info">
-                  <span className="walk-name">{walk.name}</span>
-                  <span className="walk-meta">
+              <li key={walk.id} className="dog-tracker__item">
+                <div className="dog-tracker__item-info">
+                  <span className="dog-tracker__item-name">{walk.name}</span>
+                  <span className="dog-tracker__item-meta">
                     {walk.duration} min
                     {walk.date && (
-                      <span className="walk-date">
+                      <span className="dog-tracker__item-date">
                         {" "}
                         · {formatDate(walk.date)}
                       </span>
@@ -103,7 +109,7 @@ function App() {
                   </span>
                 </div>
                 <button
-                  className="delete-btn"
+                  className="dog-tracker__button dog-tracker__button--delete"
                   onClick={() => {
                     if (
                       window.confirm(
@@ -121,7 +127,7 @@ function App() {
           </ul>
         )}
       </section>
-    </>
+    </main>
   );
 }
 
