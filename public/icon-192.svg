@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192" role="img" aria-label="Dog Tracker icon">
+  <rect width="192" height="192" rx="28" fill="#aa3bff"/>
+  <circle cx="96" cy="108" r="44" fill="#ffffff"/>
+  <circle cx="78" cy="70" r="14" fill="#ffffff"/>
+  <circle cx="114" cy="70" r="14" fill="#ffffff"/>
+  <path d="M96 88l10 18h-20z" fill="#aa3bff"/>
+  <path d="M68 122c10 10 46 10 56 0" stroke="#aa3bff" stroke-width="8" fill="none" stroke-linecap="round"/>
+</svg>
