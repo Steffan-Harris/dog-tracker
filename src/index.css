@@ -116,6 +116,36 @@ code {
   padding: 0 16px 24px;
 }
 
+.dog-tracker__dog-name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.dog-tracker__label {
+  font-size: 14px;
+  color: var(--text);
+}
+
+.dog-tracker__input--dog-name {
+  width: 220px;
+}
+
+@media (max-width: 640px) {
+  .dog-tracker__dog-name {
+    flex-direction: column;
+    align-items: stretch;
+    max-width: 320px;
+    margin-inline: auto;
+  }
+
+  .dog-tracker__input--dog-name {
+    width: 100%;
+  }
+}
+
 .dog-tracker__form {
   display: flex;
   gap: 8px;

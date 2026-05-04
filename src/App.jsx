@@ -13,6 +13,9 @@ const INITIAL_WALKS = [
   { id: newId(), name: "Afternoon Walk", duration: 30, date: null },
 ];
 
+const DOG_NAME_STORAGE_KEY = "dog-tracker-dog-name";
+const DEFAULT_DOG_NAME = "Jesse";
+
 function formatDate(iso) {
   if (!iso) return null;
   const d = new Date(iso);
@@ -26,6 +29,14 @@ function formatDate(iso) {
 }
 
 function App() {
+  const [dogName, setDogName] = useState(() => {
+    try {
+      return localStorage.getItem(DOG_NAME_STORAGE_KEY) || DEFAULT_DOG_NAME;
+    } catch {
+      return DEFAULT_DOG_NAME;
+    }
+  });
+
   const [walks, setWalks] = useState(() => {
     try {
       const stored = localStorage.getItem("dog-tracker-walks");
@@ -41,11 +52,30 @@ function App() {
     localStorage.setItem("dog-tracker-walks", JSON.stringify(walks));
   }, [walks]);
 
+  useEffect(() => {
+    localStorage.setItem(DOG_NAME_STORAGE_KEY, dogName);
+  }, [dogName]);
+
   const canSubmit = newWalk.trim().length > 0;
+  const displayDogName = dogName.trim() || DEFAULT_DOG_NAME;
 
   return (
     <main className="dog-tracker">
-      <h1 className="dog-tracker__title">Dog Walk Tracker: Jesse</h1>
+      <h1 className="dog-tracker__title">Dog Walk Tracker: {displayDogName}</h1>
+      <div className="dog-tracker__dog-name">
+        <label className="dog-tracker__label" htmlFor="dog-name">
+          Dog name
+        </label>
+        <input
+          id="dog-name"
+          className="dog-tracker__input dog-tracker__input--dog-name"
+          type="text"
+          placeholder="Enter dog name"
+          value={dogName}
+          onChange={(event) => setDogName(event.target.value)}
+          aria-label="Dog name"
+        />
+      </div>
       <form
         className="dog-tracker__form"
         onSubmit={(event) => {
